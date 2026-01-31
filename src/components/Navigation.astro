@@ -16,12 +16,12 @@ const currentPath = Astro.url.pathname;
     <div class="flex items-center justify-between h-16 md:h-20">
       <!-- Logo -->
       <a href="/" class="flex items-center space-x-3 group">
-        <div class="w-10 h-10 md:w-12 md:h-12 bg-quaker-gold rounded-full flex items-center justify-center transform group-hover:scale-110 transition-transform duration-300">
+        <div class="w-10 h-10 md:w-12 md:h-12 bg-white rounded-full flex items-center justify-center transform group-hover:scale-110 transition-transform duration-300">
           <span class="text-quaker-green font-display font-bold text-lg md:text-xl">OP</span>
         </div>
         <div class="hidden sm:block">
           <span class="text-white font-display text-lg md:text-xl tracking-wide">Orchard Park</span>
-          <span class="text-quaker-gold font-display text-lg md:text-xl tracking-wide ml-1">Lacrosse</span>
+          <span class="text-white/70 font-display text-lg md:text-xl tracking-wide ml-1">Lacrosse</span>
         </div>
       </a>
 
@@ -32,8 +32,8 @@ const currentPath = Astro.url.pathname;
             href={link.href}
             class={`px-4 py-2 font-display text-sm tracking-wider transition-all duration-300 rounded-md ${
               currentPath === link.href 
-                ? 'bg-quaker-gold text-quaker-green' 
-                : 'text-white hover:bg-white/10 hover:text-quaker-gold'
+                ? 'bg-white text-quaker-green' 
+                : 'text-white hover:bg-white/10'
             }`}
           >
             {link.label}
@@ -41,7 +41,7 @@ const currentPath = Astro.url.pathname;
         ))}
         <a 
           href="/register" 
-          class="ml-4 px-6 py-2 bg-quaker-gold text-quaker-green font-display font-semibold text-sm tracking-wider rounded-md hover:bg-white hover:scale-105 transition-all duration-300"
+          class="ml-4 px-6 py-2 bg-white text-quaker-green font-display font-semibold text-sm tracking-wider rounded-md hover:bg-quaker-dark hover:text-white hover:scale-105 transition-all duration-300"
         >
           Register Now
         </a>
@@ -67,7 +67,7 @@ const currentPath = Astro.url.pathname;
             href={link.href}
             class={`px-4 py-3 font-display text-sm tracking-wider rounded-md ${
               currentPath === link.href 
-                ? 'bg-quaker-gold text-quaker-green' 
+                ? 'bg-white text-quaker-green' 
                 : 'text-white hover:bg-white/10'
             }`}
           >
@@ -76,7 +76,7 @@ const currentPath = Astro.url.pathname;
         ))}
         <a 
           href="/register" 
-          class="px-4 py-3 bg-quaker-gold text-quaker-green font-display font-semibold text-sm tracking-wider rounded-md text-center mt-2"
+          class="px-4 py-3 bg-white text-quaker-green font-display font-semibold text-sm tracking-wider rounded-md text-center mt-2"
         >
           Register Now
         </a>
