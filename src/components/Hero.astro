@@ -18,7 +18,7 @@ const {
   
   <!-- Animated background pattern -->
   <div class="absolute inset-0 opacity-10">
-    <div class="absolute inset-0" style="background-image: url('data:image/svg+xml,%3Csvg width=\"60\" height=\"60\" viewBox=\"0 0 60 60\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cg fill=\"none\" fill-rule=\"evenodd\"%3E%3Cg fill=\"%23D4AF37\" fill-opacity=\"0.4\"%3E%3Cpath d=\"M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"></div>
+    <div class="absolute inset-0" style="background-image: url('data:image/svg+xml,%3Csvg width=\"60\" height=\"60\" viewBox=\"0 0 60 60\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cg fill=\"none\" fill-rule=\"evenodd\"%3E%3Cg fill=\"%23FFFFFF\" fill-opacity=\"0.4\"%3E%3Cpath d=\"M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"></div>
   </div>
 
   <!-- Content -->
@@ -26,7 +26,7 @@ const {
     <h1 class="font-display text-5xl md:text-7xl lg:text-8xl text-white text-shadow mb-4 animate-slide-up opacity-0">
       {title}
     </h1>
-    <p class="font-display text-xl md:text-2xl lg:text-3xl text-quaker-gold tracking-wider mb-8 animate-slide-up opacity-0 stagger-1">
+    <p class="font-display text-xl md:text-2xl lg:text-3xl text-white/80 tracking-wider mb-8 animate-slide-up opacity-0 stagger-1">
       {subtitle}
     </p>
     
@@ -34,7 +34,7 @@ const {
       <div class="flex flex-col sm:flex-row gap-4 justify-center animate-slide-up opacity-0 stagger-2">
         <a 
           href="/register" 
-          class="px-8 py-4 bg-quaker-gold text-quaker-green font-display font-bold text-lg tracking-wider rounded-lg hover:bg-white hover:scale-105 transform transition-all duration-300 shadow-lg"
+          class="px-8 py-4 bg-white text-quaker-green font-display font-bold text-lg tracking-wider rounded-lg hover:bg-quaker-dark hover:text-white hover:scale-105 transform transition-all duration-300 shadow-lg"
         >
           Register Now
         </a>

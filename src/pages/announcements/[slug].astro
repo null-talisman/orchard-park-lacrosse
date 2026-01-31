@@ -27,7 +27,7 @@ const formattedDate = announcement.data.date.toLocaleDateString('en-US', {
     <header class="gradient-hero py-16">
       <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         {announcement.data.priority === 'high' && (
-          <span class="inline-block bg-quaker-gold text-quaker-green px-4 py-1 rounded-full text-sm font-display tracking-wider mb-4">
+          <span class="inline-block bg-white text-quaker-green px-4 py-1 rounded-full text-sm font-display tracking-wider mb-4">
             📢 Important Announcement
           </span>
         )}
@@ -55,7 +55,7 @@ const formattedDate = announcement.data.date.toLocaleDateString('en-US', {
 
         <!-- Back Link -->
         <div class="mt-8 text-center">
-          <a href="/announcements" class="inline-flex items-center text-quaker-green hover:text-quaker-gold transition-colors font-medium">
+          <a href="/announcements" class="inline-flex items-center text-quaker-green hover:text-quaker-dark transition-colors font-medium">
             <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
             </svg>
