@@ -1,0 +1,47 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import AnnouncementCard from '../../components/AnnouncementCard.astro';
+import { getCollection } from 'astro:content';
+
+const announcements = (await getCollection('announcements'))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+---
+
+<Layout title="News & Announcements" description="Stay updated with the latest news from Orchard Park Lacrosse">
+  <!-- Hero -->
+  <section class="gradient-hero py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h1 class="font-display text-5xl md:text-6xl text-white text-shadow mb-4">
+        News & Announcements
+      </h1>
+      <p class="text-white/80 text-lg max-w-2xl mx-auto">
+        Stay up to date with the latest news, updates, and announcements from OP Lacrosse.
+      </p>
+    </div>
+  </section>
+
+  <!-- Announcements List -->
+  <section class="py-16 bg-quaker-cream">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      {announcements.length > 0 ? (
+        <div class="space-y-6">
+          {announcements.map(announcement => (
+            <AnnouncementCard
+              title={announcement.data.title}
+              date={announcement.data.date.toISOString()}
+              excerpt={announcement.data.excerpt}
+              slug={announcement.slug}
+              priority={announcement.data.priority}
+            />
+          ))}
+        </div>
+      ) : (
+        <div class="text-center py-16">
+          <div class="text-6xl mb-4">📰</div>
+          <h2 class="font-display text-2xl text-quaker-dark mb-2">No Announcements Yet</h2>
+          <p class="text-quaker-dark/60">Check back soon for updates!</p>
+        </div>
+      )}
+    </div>
+  </section>
+</Layout>

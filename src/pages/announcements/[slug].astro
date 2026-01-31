@@ -1,0 +1,69 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const announcements = await getCollection('announcements');
+  return announcements.map(announcement => ({
+    params: { slug: announcement.slug },
+    props: { announcement },
+  }));
+}
+
+const { announcement } = Astro.props;
+const { Content } = await announcement.render();
+
+const formattedDate = announcement.data.date.toLocaleDateString('en-US', {
+  weekday: 'long',
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric'
+});
+---
+
+<Layout title={announcement.data.title} description={announcement.data.excerpt}>
+  <article>
+    <!-- Header -->
+    <header class="gradient-hero py-16">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        {announcement.data.priority === 'high' && (
+          <span class="inline-block bg-quaker-gold text-quaker-green px-4 py-1 rounded-full text-sm font-display tracking-wider mb-4">
+            📢 Important Announcement
+          </span>
+        )}
+        <h1 class="font-display text-4xl md:text-5xl text-white text-shadow mb-4">
+          {announcement.data.title}
+        </h1>
+        <div class="flex items-center gap-4 text-white/80">
+          <time>{formattedDate}</time>
+          {announcement.data.author && (
+            <>
+              <span>•</span>
+              <span>By {announcement.data.author}</span>
+            </>
+          )}
+        </div>
+      </div>
+    </header>
+
+    <!-- Content -->
+    <div class="py-12 bg-quaker-cream">
+      <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="bg-white rounded-xl shadow-lg p-8 md:p-12 prose prose-green max-w-none">
+          <Content />
+        </div>
+
+        <!-- Back Link -->
+        <div class="mt-8 text-center">
+          <a href="/announcements" class="inline-flex items-center text-quaker-green hover:text-quaker-gold transition-colors font-medium">
+            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+            </svg>
+            Back to All News
+          </a>
+        </div>
+      </div>
+    </div>
+  </article>
+</Layout>
+

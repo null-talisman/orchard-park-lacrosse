@@ -1,0 +1,42 @@
+---
+interface Props {
+  title: string;
+  season: string;
+  description: string;
+  ages: string;
+  href: string;
+  icon: string;
+}
+
+const { title, season, description, ages, href, icon } = Astro.props;
+---
+
+<a href={href} class="group block">
+  <div class="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden h-full border-b-4 border-transparent hover:border-quaker-gold">
+    <div class="p-6">
+      <div class="flex items-center gap-3 mb-4">
+        <span class="text-4xl">{icon}</span>
+        <div>
+          <span class="text-xs font-display text-quaker-green/60 tracking-wider uppercase">{season}</span>
+          <h3 class="font-display text-xl text-quaker-dark group-hover:text-quaker-green transition-colors">
+            {title}
+          </h3>
+        </div>
+      </div>
+      <p class="text-quaker-dark/70 text-sm leading-relaxed mb-4">
+        {description}
+      </p>
+      <div class="flex items-center justify-between">
+        <span class="text-xs bg-quaker-cream text-quaker-green px-3 py-1 rounded-full font-medium">
+          Ages: {ages}
+        </span>
+        <span class="text-quaker-green font-semibold text-sm group-hover:translate-x-1 transition-transform inline-flex items-center">
+          Learn More
+          <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg>
+        </span>
+      </div>
+    </div>
+  </div>
+</a>

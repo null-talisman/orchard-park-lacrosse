@@ -1,0 +1,83 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+const programs = (await getCollection('programs'))
+  .sort((a, b) => a.data.order - b.data.order);
+---
+
+<Layout title="Programs" description="Explore our lacrosse programs for all ages and skill levels">
+  <!-- Hero -->
+  <section class="gradient-hero py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h1 class="font-display text-5xl md:text-6xl text-white text-shadow mb-4">
+        Our Programs
+      </h1>
+      <p class="text-white/80 text-lg max-w-2xl mx-auto">
+        From first-time players to travel team athletes, we have programs designed for every skill level and age group.
+      </p>
+    </div>
+  </section>
+
+  <!-- Programs List -->
+  <section class="py-16 bg-quaker-cream">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="space-y-12">
+        {programs.map(async (program) => {
+          const { Content } = await program.render();
+          return (
+            <article id={program.slug} class="bg-white rounded-xl shadow-lg overflow-hidden scroll-mt-24">
+              <div class="bg-quaker-green p-6">
+                <div class="flex items-center gap-4">
+                  <span class="text-5xl">{program.data.icon}</span>
+                  <div>
+                    <span class="text-quaker-gold font-display text-sm tracking-wider">{program.data.season}</span>
+                    <h2 class="font-display text-2xl md:text-3xl text-white">{program.data.title}</h2>
+                  </div>
+                </div>
+              </div>
+              <div class="p-6 md:p-8">
+                <div class="flex flex-wrap gap-4 mb-6">
+                  <span class="bg-quaker-cream text-quaker-green px-4 py-2 rounded-full text-sm font-medium">
+                    Ages: {program.data.ages}
+                  </span>
+                  {program.data.cost && (
+                    <span class="bg-quaker-gold/20 text-quaker-dark px-4 py-2 rounded-full text-sm font-medium">
+                      {program.data.cost}
+                    </span>
+                  )}
+                  {program.data.registrationOpen ? (
+                    <span class="bg-green-100 text-green-700 px-4 py-2 rounded-full text-sm font-medium">
+                      ✓ Registration Open
+                    </span>
+                  ) : (
+                    <span class="bg-gray-100 text-gray-600 px-4 py-2 rounded-full text-sm font-medium">
+                      Registration Closed
+                    </span>
+                  )}
+                </div>
+                <div class="prose prose-green max-w-none">
+                  <Content />
+                </div>
+                {program.data.registrationOpen && (
+                  <div class="mt-8 pt-6 border-t border-gray-200">
+                    <a 
+                      href="/register" 
+                      class="inline-flex items-center px-6 py-3 bg-quaker-green text-white font-display tracking-wider rounded-lg hover:bg-quaker-dark transition-colors"
+                    >
+                      Register for {program.data.title}
+                      <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                      </svg>
+                    </a>
+                  </div>
+                )}
+              </div>
+            </article>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+</Layout>
+

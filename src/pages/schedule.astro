@@ -1,0 +1,149 @@
+---
+import Layout from '../layouts/Layout.astro';
+import EventCard from '../components/EventCard.astro';
+import { getCollection } from 'astro:content';
+
+const eventsData = await getCollection('events');
+const allEvents = eventsData[0]?.data || [];
+
+// Sort events by date
+const sortedEvents = [...allEvents].sort((a: any, b: any) => 
+  new Date(a.date).valueOf() - new Date(b.date).valueOf()
+);
+
+// Group by month
+const eventsByMonth: Record<string, any[]> = {};
+sortedEvents.forEach((event: any) => {
+  const date = new Date(event.date);
+  const monthKey = date.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+  if (!eventsByMonth[monthKey]) {
+    eventsByMonth[monthKey] = [];
+  }
+  eventsByMonth[monthKey].push(event);
+});
+
+// Event type filter options
+const eventTypes = ['all', 'game', 'practice', 'tournament', 'meeting', 'camp'];
+---
+
+<Layout title="Schedule" description="View the full schedule of lacrosse events, games, and practices">
+  <!-- Hero -->
+  <section class="gradient-hero py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h1 class="font-display text-5xl md:text-6xl text-white text-shadow mb-4">
+        Schedule
+      </h1>
+      <p class="text-white/80 text-lg max-w-2xl mx-auto">
+        Stay up to date with all our games, practices, tournaments, and events.
+      </p>
+    </div>
+  </section>
+
+  <!-- Filter -->
+  <section class="bg-white border-b sticky top-16 md:top-20 z-40">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+      <div class="flex items-center gap-2 overflow-x-auto pb-2">
+        <span class="text-sm text-quaker-dark/60 font-medium whitespace-nowrap">Filter:</span>
+        {eventTypes.map(type => (
+          <button 
+            data-filter={type}
+            class={`filter-btn px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-colors ${
+              type === 'all' 
+                ? 'bg-quaker-green text-white' 
+                : 'bg-quaker-cream text-quaker-dark hover:bg-quaker-green/20'
+            }`}
+          >
+            {type === 'all' ? 'All Events' : type.charAt(0).toUpperCase() + type.slice(1) + 's'}
+          </button>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Events -->
+  <section class="py-12 bg-quaker-cream min-h-screen">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      {Object.entries(eventsByMonth).length > 0 ? (
+        Object.entries(eventsByMonth).map(([month, events]) => (
+          <div class="mb-12" data-month={month}>
+            <h2 class="font-display text-2xl text-quaker-dark mb-6 sticky top-32 md:top-36 bg-quaker-cream py-2 z-30">
+              {month}
+            </h2>
+            <div class="space-y-4">
+              {events.map((event: any) => (
+                <div data-event-type={event.type}>
+                  <EventCard
+                    title={event.title}
+                    date={event.date}
+                    time={event.time}
+                    location={event.location}
+                    type={event.type}
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        ))
+      ) : (
+        <div class="text-center py-16">
+          <div class="text-6xl mb-4">📅</div>
+          <h2 class="font-display text-2xl text-quaker-dark mb-2">No Events Scheduled</h2>
+          <p class="text-quaker-dark/60">Check back soon for upcoming events!</p>
+        </div>
+      )}
+    </div>
+  </section>
+
+  <!-- Subscribe CTA -->
+  <section class="py-12 bg-white">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h2 class="font-display text-2xl text-quaker-dark mb-4">Never Miss an Event</h2>
+      <p class="text-quaker-dark/70 mb-6">
+        Subscribe to our calendar to stay up to date with all OP Lacrosse events.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="#" class="px-6 py-3 bg-quaker-green text-white font-display tracking-wider rounded-lg hover:bg-quaker-dark transition-colors flex items-center justify-center gap-2">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+          </svg>
+          Add to Google Calendar
+        </a>
+        <a href="#" class="px-6 py-3 bg-quaker-cream text-quaker-green font-display tracking-wider rounded-lg hover:bg-quaker-gold/20 transition-colors flex items-center justify-center gap-2">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+          </svg>
+          Download .ics
+        </a>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<script>
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const eventItems = document.querySelectorAll('[data-event-type]');
+  
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const filter = btn.getAttribute('data-filter');
+      
+      // Update button styles
+      filterBtns.forEach(b => {
+        b.classList.remove('bg-quaker-green', 'text-white');
+        b.classList.add('bg-quaker-cream', 'text-quaker-dark');
+      });
+      btn.classList.remove('bg-quaker-cream', 'text-quaker-dark');
+      btn.classList.add('bg-quaker-green', 'text-white');
+      
+      // Filter events
+      eventItems.forEach(item => {
+        const eventType = item.getAttribute('data-event-type');
+        if (filter === 'all' || eventType === filter) {
+          (item as HTMLElement).style.display = 'block';
+        } else {
+          (item as HTMLElement).style.display = 'none';
+        }
+      });
+    });
+  });
+</script>

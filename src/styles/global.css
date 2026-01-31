@@ -1,0 +1,129 @@
+/* Google Fonts - must be first */
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Source+Sans+3:wght@400;500;600;700&display=swap');
+
+@import "tailwindcss";
+
+@theme {
+  /* Custom Colors - Lacrosse Green & Gold */
+  --color-quaker-green: #1B4D3E;
+  --color-quaker-gold: #D4AF37;
+  --color-quaker-cream: #F5F1E6;
+  --color-quaker-dark: #0D2818;
+  --color-field-green: #228B22;
+  
+  /* Fonts */
+  --font-family-display: "Oswald", system-ui, sans-serif;
+  --font-family-body: "Source Sans 3", system-ui, sans-serif;
+}
+
+/* Base styles */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-family-body);
+  background-color: var(--color-quaker-cream);
+  color: var(--color-quaker-dark);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-family-display);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Font utility class */
+.font-display {
+  font-family: var(--font-family-display);
+}
+
+/* Utility classes */
+.gradient-hero {
+  background: linear-gradient(135deg, var(--color-quaker-green) 0%, var(--color-quaker-dark) 100%);
+}
+
+.text-shadow {
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.6s ease-out forwards;
+}
+
+.animate-slide-up {
+  animation: slideUp 0.6s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { 
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to { 
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Stagger animations */
+.stagger-1 { animation-delay: 0.1s; }
+.stagger-2 { animation-delay: 0.2s; }
+.stagger-3 { animation-delay: 0.3s; }
+.stagger-4 { animation-delay: 0.4s; }
+.stagger-5 { animation-delay: 0.5s; }
+
+/* Prose styles for markdown content */
+.prose h2 {
+  font-family: var(--font-family-display);
+  font-size: 1.25rem;
+  color: var(--color-quaker-dark);
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.prose h3 {
+  font-family: var(--font-family-display);
+  font-size: 1.125rem;
+  color: var(--color-quaker-dark);
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.prose ul, .prose ol {
+  margin: 1rem 0;
+}
+
+.prose li {
+  margin-left: 1rem;
+  color: rgba(13, 40, 24, 0.8);
+}
+
+.prose p {
+  color: rgba(13, 40, 24, 0.8);
+  line-height: 1.75;
+  margin: 1rem 0;
+}
+
+.prose strong {
+  color: var(--color-quaker-dark);
+  font-weight: 600;
+}
+
+.prose a {
+  color: var(--color-quaker-green);
+  text-decoration: underline;
+}
+
+.prose a:hover {
+  color: var(--color-quaker-gold);
+}

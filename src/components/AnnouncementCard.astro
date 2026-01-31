@@ -1,0 +1,44 @@
+---
+interface Props {
+  title: string;
+  date: string;
+  excerpt: string;
+  slug: string;
+  priority?: 'high' | 'normal';
+}
+
+const { title, date, excerpt, slug, priority = 'normal' } = Astro.props;
+const formattedDate = new Date(date).toLocaleDateString('en-US', { 
+  month: 'short', 
+  day: 'numeric',
+  year: 'numeric'
+});
+---
+
+<article class="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden group">
+  {priority === 'high' && (
+    <div class="bg-quaker-gold text-quaker-green px-4 py-1 text-xs font-display tracking-wider">
+      📢 Important Announcement
+    </div>
+  )}
+  <div class="p-6">
+    <time class="text-sm text-quaker-green/60 font-medium">{formattedDate}</time>
+    <h3 class="font-display text-xl text-quaker-dark mt-2 group-hover:text-quaker-green transition-colors">
+      <a href={`/announcements/${slug}`} class="hover:underline">
+        {title}
+      </a>
+    </h3>
+    <p class="text-quaker-dark/70 mt-3 line-clamp-3">
+      {excerpt}
+    </p>
+    <a 
+      href={`/announcements/${slug}`}
+      class="inline-flex items-center mt-4 text-quaker-green font-semibold text-sm hover:text-quaker-gold transition-colors"
+    >
+      Read More
+      <svg class="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+      </svg>
+    </a>
+  </div>
+</article>

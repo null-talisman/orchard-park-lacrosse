@@ -1,0 +1,195 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+const programs = (await getCollection('programs'))
+  .filter(p => p.data.registrationOpen)
+  .sort((a, b) => a.data.order - b.data.order);
+---
+
+<Layout title="Register" description="Register your player for Orchard Park Lacrosse programs">
+  <!-- Hero -->
+  <section class="gradient-hero py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h1 class="font-display text-5xl md:text-6xl text-white text-shadow mb-4">
+        Registration
+      </h1>
+      <p class="text-white/80 text-lg max-w-2xl mx-auto">
+        Join the OP Lacrosse family! Register for our programs below.
+      </p>
+    </div>
+  </section>
+
+  <!-- Registration Info -->
+  <section class="py-12 bg-quaker-gold">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+        <div class="flex items-center gap-3">
+          <span class="text-4xl">🎉</span>
+          <div>
+            <span class="font-display text-quaker-green text-lg">Early Bird Pricing!</span>
+            <p class="text-quaker-green/80 text-sm">Save $25 when you register by February 15th</p>
+          </div>
+        </div>
+        <div class="text-quaker-green font-display">
+          <span class="text-sm opacity-70">Deadline:</span>
+          <span class="text-lg ml-2">Feb 15, 2026</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Programs Open for Registration -->
+  <section class="py-16 bg-quaker-cream">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="font-display text-3xl text-quaker-dark mb-8 text-center">
+        Programs Open for Registration
+      </h2>
+      
+      {programs.length > 0 ? (
+        <div class="space-y-6">
+          {programs.map(program => (
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+              <div class="p-6 md:p-8">
+                <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                  <div class="flex items-center gap-4">
+                    <span class="text-4xl">{program.data.icon}</span>
+                    <div>
+                      <h3 class="font-display text-xl text-quaker-dark">{program.data.title}</h3>
+                      <p class="text-quaker-dark/60 text-sm">Ages: {program.data.ages}</p>
+                    </div>
+                  </div>
+                  <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+                    {program.data.cost && (
+                      <span class="bg-quaker-cream px-4 py-2 rounded-lg text-quaker-dark font-semibold">
+                        {program.data.cost}
+                      </span>
+                    )}
+                    <a 
+                      href={`#register-${program.slug}`}
+                      class="px-6 py-3 bg-quaker-green text-white font-display tracking-wider rounded-lg hover:bg-quaker-dark transition-colors"
+                    >
+                      Register Now
+                    </a>
+                  </div>
+                </div>
+                {program.data.registrationDeadline && (
+                  <p class="mt-4 text-sm text-quaker-dark/60">
+                    Registration deadline: {program.data.registrationDeadline.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
+                  </p>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div class="text-center py-12 bg-white rounded-xl shadow-lg">
+          <div class="text-6xl mb-4">📋</div>
+          <h3 class="font-display text-2xl text-quaker-dark mb-2">No Programs Currently Open</h3>
+          <p class="text-quaker-dark/60">Check back soon for upcoming registration periods!</p>
+        </div>
+      )}
+    </div>
+  </section>
+
+  <!-- Registration Steps -->
+  <section class="py-16 bg-white">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="font-display text-3xl text-quaker-dark mb-8 text-center">
+        How to Register
+      </h2>
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="text-center">
+          <div class="w-16 h-16 bg-quaker-green rounded-full flex items-center justify-center mx-auto mb-4">
+            <span class="text-white font-display text-2xl">1</span>
+          </div>
+          <h3 class="font-display text-lg text-quaker-dark mb-2">Create Account</h3>
+          <p class="text-quaker-dark/70 text-sm">Sign up on our registration platform with your email address.</p>
+        </div>
+        <div class="text-center">
+          <div class="w-16 h-16 bg-quaker-green rounded-full flex items-center justify-center mx-auto mb-4">
+            <span class="text-white font-display text-2xl">2</span>
+          </div>
+          <h3 class="font-display text-lg text-quaker-dark mb-2">Select Program</h3>
+          <p class="text-quaker-dark/70 text-sm">Choose the program and age division for your player.</p>
+        </div>
+        <div class="text-center">
+          <div class="w-16 h-16 bg-quaker-green rounded-full flex items-center justify-center mx-auto mb-4">
+            <span class="text-white font-display text-2xl">3</span>
+          </div>
+          <h3 class="font-display text-lg text-quaker-dark mb-2">Complete Payment</h3>
+          <p class="text-quaker-dark/70 text-sm">Submit payment to complete your registration.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="py-16 bg-quaker-cream">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="font-display text-3xl text-quaker-dark mb-8 text-center">
+        Frequently Asked Questions
+      </h2>
+      <div class="space-y-4">
+        <details class="bg-white rounded-xl shadow-md overflow-hidden group">
+          <summary class="px-6 py-4 cursor-pointer flex items-center justify-between font-display text-quaker-dark hover:bg-quaker-cream/50 transition-colors">
+            What equipment does my child need?
+            <svg class="w-5 h-5 text-quaker-green transform group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </summary>
+          <div class="px-6 pb-4 text-quaker-dark/70">
+            <p>Boys players need a helmet, gloves, shoulder pads, arm pads, and a stick. Girls players need goggles, a mouthguard, and a stick. We have loaner equipment available for new players - just contact us!</p>
+          </div>
+        </details>
+        <details class="bg-white rounded-xl shadow-md overflow-hidden group">
+          <summary class="px-6 py-4 cursor-pointer flex items-center justify-between font-display text-quaker-dark hover:bg-quaker-cream/50 transition-colors">
+            Can I get a refund if my child can't participate?
+            <svg class="w-5 h-5 text-quaker-green transform group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </summary>
+          <div class="px-6 pb-4 text-quaker-dark/70">
+            <p>Full refunds are available up to 2 weeks before the season starts. After that, refunds are prorated based on the remaining season. Contact us for special circumstances.</p>
+          </div>
+        </details>
+        <details class="bg-white rounded-xl shadow-md overflow-hidden group">
+          <summary class="px-6 py-4 cursor-pointer flex items-center justify-between font-display text-quaker-dark hover:bg-quaker-cream/50 transition-colors">
+            My child has never played lacrosse. Can they still join?
+            <svg class="w-5 h-5 text-quaker-green transform group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </summary>
+          <div class="px-6 pb-4 text-quaker-dark/70">
+            <p>Absolutely! We welcome players of all experience levels. Our coaches are trained to work with beginners and will help your child develop their skills at their own pace.</p>
+          </div>
+        </details>
+        <details class="bg-white rounded-xl shadow-md overflow-hidden group">
+          <summary class="px-6 py-4 cursor-pointer flex items-center justify-between font-display text-quaker-dark hover:bg-quaker-cream/50 transition-colors">
+            Is financial assistance available?
+            <svg class="w-5 h-5 text-quaker-green transform group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </summary>
+          <div class="px-6 pb-4 text-quaker-dark/70">
+            <p>Yes! We believe every child should have the opportunity to play. We offer scholarships and payment plans for families who need assistance. Please contact us confidentially at info@oplax.org.</p>
+          </div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact CTA -->
+  <section class="py-16 bg-white">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h2 class="font-display text-2xl text-quaker-dark mb-4">Have Questions?</h2>
+      <p class="text-quaker-dark/70 mb-6">We're here to help! Reach out with any questions about registration.</p>
+      <a href="/contact" class="inline-flex items-center px-6 py-3 bg-quaker-green text-white font-display tracking-wider rounded-lg hover:bg-quaker-dark transition-colors">
+        Contact Us
+        <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+        </svg>
+      </a>
+    </div>
+  </section>
+</Layout>

@@ -1,0 +1,57 @@
+---
+interface Props {
+  title?: string;
+  subtitle?: string;
+  showCta?: boolean;
+}
+
+const { 
+  title = "Orchard Park Lacrosse", 
+  subtitle = "Building Champions On & Off The Field",
+  showCta = true
+} = Astro.props;
+---
+
+<section class="relative min-h-[70vh] flex items-center justify-center overflow-hidden">
+  <!-- Background with gradient overlay -->
+  <div class="absolute inset-0 gradient-hero"></div>
+  
+  <!-- Animated background pattern -->
+  <div class="absolute inset-0 opacity-10">
+    <div class="absolute inset-0" style="background-image: url('data:image/svg+xml,%3Csvg width=\"60\" height=\"60\" viewBox=\"0 0 60 60\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cg fill=\"none\" fill-rule=\"evenodd\"%3E%3Cg fill=\"%23D4AF37\" fill-opacity=\"0.4\"%3E%3Cpath d=\"M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"></div>
+  </div>
+
+  <!-- Content -->
+  <div class="relative z-10 text-center px-4 max-w-4xl mx-auto">
+    <h1 class="font-display text-5xl md:text-7xl lg:text-8xl text-white text-shadow mb-4 animate-slide-up opacity-0">
+      {title}
+    </h1>
+    <p class="font-display text-xl md:text-2xl lg:text-3xl text-quaker-gold tracking-wider mb-8 animate-slide-up opacity-0 stagger-1">
+      {subtitle}
+    </p>
+    
+    {showCta && (
+      <div class="flex flex-col sm:flex-row gap-4 justify-center animate-slide-up opacity-0 stagger-2">
+        <a 
+          href="/register" 
+          class="px-8 py-4 bg-quaker-gold text-quaker-green font-display font-bold text-lg tracking-wider rounded-lg hover:bg-white hover:scale-105 transform transition-all duration-300 shadow-lg"
+        >
+          Register Now
+        </a>
+        <a 
+          href="/programs" 
+          class="px-8 py-4 bg-transparent border-2 border-white text-white font-display font-bold text-lg tracking-wider rounded-lg hover:bg-white hover:text-quaker-green transform transition-all duration-300"
+        >
+          View Programs
+        </a>
+      </div>
+    )}
+  </div>
+
+  <!-- Scroll indicator -->
+  <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+    <svg class="w-6 h-6 text-white/70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+    </svg>
+  </div>
+</section>

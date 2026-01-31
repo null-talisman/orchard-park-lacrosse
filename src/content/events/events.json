@@ -1,0 +1,62 @@
+[
+  {
+    "title": "Spring Registration Deadline",
+    "date": "2026-03-01",
+    "time": "11:59 PM",
+    "location": "Online",
+    "type": "meeting",
+    "description": "Last day to register for the spring season"
+  },
+  {
+    "title": "Spring Season Kickoff - Boys U12",
+    "date": "2026-03-15",
+    "time": "9:00 AM",
+    "endTime": "11:00 AM",
+    "location": "Orchard Park HS Field",
+    "type": "practice",
+    "program": "Boys Spring"
+  },
+  {
+    "title": "Spring Season Kickoff - Girls U12",
+    "date": "2026-03-15",
+    "time": "11:30 AM",
+    "endTime": "1:30 PM",
+    "location": "Orchard Park HS Field",
+    "type": "practice",
+    "program": "Girls Spring"
+  },
+  {
+    "title": "OP vs. Hamburg - Boys Varsity",
+    "date": "2026-03-22",
+    "time": "2:00 PM",
+    "location": "Orchard Park HS Stadium",
+    "type": "game",
+    "program": "Boys Spring"
+  },
+  {
+    "title": "Spring Skills Camp",
+    "date": "2026-04-05",
+    "time": "9:00 AM",
+    "endTime": "12:00 PM",
+    "location": "Orchard Park HS Field",
+    "type": "camp",
+    "description": "Open to all registered players"
+  },
+  {
+    "title": "Quaker Lax Tournament",
+    "date": "2026-04-19",
+    "time": "8:00 AM",
+    "endTime": "5:00 PM",
+    "location": "Orchard Park Sports Complex",
+    "type": "tournament",
+    "description": "Annual spring tournament"
+  },
+  {
+    "title": "Parent Meeting - Summer Programs",
+    "date": "2026-04-25",
+    "time": "7:00 PM",
+    "location": "OP High School Auditorium",
+    "type": "meeting",
+    "description": "Info session for summer league and travel teams"
+  }
+]

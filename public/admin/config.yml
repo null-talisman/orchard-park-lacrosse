@@ -1,0 +1,95 @@
+# Decap CMS Configuration
+# Docs: https://decapcms.org/docs/configuration-options/
+
+backend:
+  name: git-gateway
+  branch: main
+
+# Uncomment below for local development
+# local_backend: true
+
+media_folder: "public/images"
+public_folder: "/images"
+
+# Content collections that coaches can edit
+collections:
+  # Announcements / News
+  - name: "announcements"
+    label: "📢 Announcements"
+    label_singular: "Announcement"
+    folder: "src/content/announcements"
+    create: true
+    delete: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Date", name: "date", widget: "datetime" }
+      - { label: "Priority", name: "priority", widget: "select", options: ["high", "normal"], default: "normal" }
+      - { label: "Short Description (shown on cards)", name: "excerpt", widget: "text" }
+      - { label: "Author", name: "author", widget: "string", required: false }
+      - { label: "Full Content", name: "body", widget: "markdown" }
+    sortable_fields: ["date", "title"]
+
+  # Events / Schedule
+  - name: "events"
+    label: "📅 Schedule & Events"
+    file: "src/content/events/events.json"
+    fields:
+      - label: "Events"
+        name: "events"
+        widget: "list"
+        summary: "{{title}} - {{date}}"
+        fields:
+          - { label: "Event Title", name: "title", widget: "string" }
+          - { label: "Date", name: "date", widget: "datetime", format: "YYYY-MM-DD", date_format: "YYYY-MM-DD", time_format: false }
+          - { label: "Start Time", name: "time", widget: "string", hint: "e.g., 9:00 AM" }
+          - { label: "End Time", name: "endTime", widget: "string", required: false, hint: "e.g., 11:00 AM" }
+          - { label: "Location", name: "location", widget: "string" }
+          - label: "Event Type"
+            name: "type"
+            widget: "select"
+            options:
+              - { label: "🏆 Game", value: "game" }
+              - { label: "🥍 Practice", value: "practice" }
+              - { label: "🎯 Tournament", value: "tournament" }
+              - { label: "📋 Meeting", value: "meeting" }
+              - { label: "⛺ Camp", value: "camp" }
+          - { label: "Description", name: "description", widget: "text", required: false }
+          - { label: "Program", name: "program", widget: "string", required: false, hint: "e.g., Boys Spring, Girls U12" }
+
+  # Programs
+  - name: "programs"
+    label: "🥍 Programs"
+    label_singular: "Program"
+    folder: "src/content/programs"
+    create: true
+    delete: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Program Name", name: "title", widget: "string" }
+      - { label: "Season", name: "season", widget: "string", hint: "e.g., Spring, Summer, Fall, Winter" }
+      - { label: "Icon", name: "icon", widget: "string", default: "🥍", hint: "Emoji icon for the program" }
+      - { label: "Age Range", name: "ages", widget: "string", hint: "e.g., K-12, 3rd-8th" }
+      - { label: "Display Order", name: "order", widget: "number", min: 1, max: 20 }
+      - { label: "Registration Open?", name: "registrationOpen", widget: "boolean", default: false }
+      - { label: "Registration Deadline", name: "registrationDeadline", widget: "datetime", required: false }
+      - { label: "Cost", name: "cost", widget: "string", required: false, hint: "e.g., $150 (Early Bird: $125)" }
+      - { label: "Program Details", name: "body", widget: "markdown" }
+    sortable_fields: ["order", "title", "season"]
+
+  # Site Settings (for future expansion)
+  - name: "settings"
+    label: "⚙️ Site Settings"
+    files:
+      - label: "Contact Information"
+        name: "contact"
+        file: "src/content/settings/contact.json"
+        fields:
+          - { label: "Email", name: "email", widget: "string" }
+          - { label: "Phone", name: "phone", widget: "string", required: false }
+          - { label: "Address Line 1", name: "address1", widget: "string" }
+          - { label: "Address Line 2", name: "address2", widget: "string" }
+          - { label: "City, State ZIP", name: "cityStateZip", widget: "string" }
+          - { label: "Facebook URL", name: "facebook", widget: "string", required: false }
+          - { label: "Instagram URL", name: "instagram", widget: "string", required: false }
+          - { label: "Twitter/X URL", name: "twitter", widget: "string", required: false }

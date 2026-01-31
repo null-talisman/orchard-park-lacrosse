@@ -1,0 +1,166 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Hero from '../components/Hero.astro';
+import AnnouncementCard from '../components/AnnouncementCard.astro';
+import EventCard from '../components/EventCard.astro';
+import ProgramCard from '../components/ProgramCard.astro';
+import { getCollection } from 'astro:content';
+
+// Get latest announcements
+const announcements = (await getCollection('announcements'))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 3);
+
+// Get upcoming events
+const eventsData = await getCollection('events');
+const allEvents = eventsData[0]?.data || [];
+const today = new Date();
+const upcomingEvents = allEvents
+  .filter((e: any) => new Date(e.date) >= today)
+  .sort((a: any, b: any) => new Date(a.date).valueOf() - new Date(b.date).valueOf())
+  .slice(0, 4);
+
+// Get programs
+const programs = (await getCollection('programs'))
+  .sort((a, b) => a.data.order - b.data.order)
+  .slice(0, 4);
+---
+
+<Layout title="Home">
+  <Hero />
+
+  <!-- Quick Stats Section -->
+  <section class="py-12 bg-quaker-green -mt-1">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+        <div class="animate-fade-in opacity-0 stagger-1">
+          <span class="block text-4xl md:text-5xl font-bold text-quaker-gold">500+</span>
+          <span class="text-white/80 font-display text-sm tracking-wider">Players</span>
+        </div>
+        <div class="animate-fade-in opacity-0 stagger-2">
+          <span class="block text-4xl md:text-5xl font-bold text-quaker-gold">30+</span>
+          <span class="text-white/80 font-display text-sm tracking-wider">Years</span>
+        </div>
+        <div class="animate-fade-in opacity-0 stagger-3">
+          <span class="block text-4xl md:text-5xl font-bold text-quaker-gold">50+</span>
+          <span class="text-white/80 font-display text-sm tracking-wider">Coaches</span>
+        </div>
+        <div class="animate-fade-in opacity-0 stagger-4">
+          <span class="block text-4xl md:text-5xl font-bold text-quaker-gold">6</span>
+          <span class="text-white/80 font-display text-sm tracking-wider">Programs</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Announcements Section -->
+  <section class="py-16 bg-quaker-cream">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between mb-8">
+        <h2 class="font-display text-3xl md:text-4xl text-quaker-dark">
+          Latest <span class="text-quaker-green">News</span>
+        </h2>
+        <a href="/announcements" class="text-quaker-green font-semibold hover:text-quaker-gold transition-colors flex items-center gap-1">
+          View All
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg>
+        </a>
+      </div>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {announcements.map(announcement => (
+          <AnnouncementCard
+            title={announcement.data.title}
+            date={announcement.data.date.toISOString()}
+            excerpt={announcement.data.excerpt}
+            slug={announcement.slug}
+            priority={announcement.data.priority}
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Upcoming Events Section -->
+  <section class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between mb-8">
+        <h2 class="font-display text-3xl md:text-4xl text-quaker-dark">
+          Upcoming <span class="text-quaker-green">Events</span>
+        </h2>
+        <a href="/schedule" class="text-quaker-green font-semibold hover:text-quaker-gold transition-colors flex items-center gap-1">
+          Full Schedule
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg>
+        </a>
+      </div>
+      <div class="grid md:grid-cols-2 gap-4">
+        {upcomingEvents.map((event: any) => (
+          <EventCard
+            title={event.title}
+            date={event.date}
+            time={event.time}
+            location={event.location}
+            type={event.type}
+          />
+        ))}
+      </div>
+      {upcomingEvents.length === 0 && (
+        <p class="text-center text-quaker-dark/60 py-8">No upcoming events scheduled. Check back soon!</p>
+      )}
+    </div>
+  </section>
+
+  <!-- Programs Section -->
+  <section class="py-16 bg-quaker-cream">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <h2 class="font-display text-3xl md:text-4xl text-quaker-dark mb-4">
+          Our <span class="text-quaker-green">Programs</span>
+        </h2>
+        <p class="text-quaker-dark/70 max-w-2xl mx-auto">
+          From beginners to elite players, we have a program for everyone. Find the right fit for your player.
+        </p>
+      </div>
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {programs.map(program => (
+          <ProgramCard
+            title={program.data.title}
+            season={program.data.season}
+            description={program.body?.slice(0, 120) + '...' || ''}
+            ages={program.data.ages}
+            href={`/programs#${program.slug}`}
+            icon={program.data.icon}
+          />
+        ))}
+      </div>
+      <div class="text-center mt-8">
+        <a href="/programs" class="inline-flex items-center px-6 py-3 bg-quaker-green text-white font-display tracking-wider rounded-lg hover:bg-quaker-dark transition-colors">
+          View All Programs
+          <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="py-20 gradient-hero">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h2 class="font-display text-4xl md:text-5xl text-white text-shadow mb-6">
+        Ready to Join the Team?
+      </h2>
+      <p class="text-white/80 text-lg mb-8 max-w-2xl mx-auto">
+        Registration for Spring 2026 is now open! Early bird pricing ends February 15th.
+      </p>
+      <a 
+        href="/register" 
+        class="inline-block px-10 py-4 bg-quaker-gold text-quaker-green font-display font-bold text-lg tracking-wider rounded-lg hover:bg-white hover:scale-105 transform transition-all duration-300 shadow-lg"
+      >
+        Register Now
+      </a>
+    </div>
+  </section>
+</Layout>
